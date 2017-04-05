@@ -52,8 +52,9 @@ var requestHandler = util.freshRequire('./requestHandler');
 //option.disableWebInterface
 //option.silent        : false(default)
 //option.interceptHttps ,internal param for https
-function proxyServer(option){
+function proxyServer(option, cb){
     option = option || {};
+    cb = cb || function() {}
 
     var self       = this,
         proxyType           = /https/i.test(option.type || DEFAULT_TYPE) ? T_TYPE_HTTPS : T_TYPE_HTTP ,
@@ -245,6 +246,7 @@ function proxyServer(option){
                 logUtil.printLog(color.red(tipText), logUtil.T_ERR);
                 logUtil.printLog(err, logUtil.T_ERR);
             }
+            cb()
         }
     );
 
